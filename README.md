@@ -1,13 +1,12 @@
 deep_learning
 ==============================
 
+This is a copy of the ML22 repository by raoulg: https://github.com/raoulg/ML22
+
 For this project you will need some dependencies.
 The project uses python 3.8, and all dependencies can be installed with `poetry` if you are using that with `poetry install`.
 
 If you prefer to use `pip` you can run `pip install -r requirements.txt`.
-
-The lessons can be found inside the `notebooks`folder.
-The source code for the lessons can be found in the `src`folder.
 
 
 Project Organization
