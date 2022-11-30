@@ -96,3 +96,6 @@ data/*
 
 # Mypy cache
 .mypy_cache/
+
+# VSCode devcontainer
+.devcontainer
