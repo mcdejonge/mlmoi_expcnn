@@ -1,2 +1,2 @@
 get_MNIST.batch_size = 32
-get_MNIST.data_dir = "data/raw"
+get_MNIST.data_dir = "../data/raw"
