@@ -75,7 +75,7 @@ x, y = next(iter(train_dataloader))
 for config in configs:
     model = ConfigurableNN(config, x).to(device)
     # dump_nn_model_steps(model, x)
-    continue;
+    # continue;
     model = train_model.trainloop(
         epochs=num_epochs,
         model=model,
