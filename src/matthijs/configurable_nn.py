@@ -6,7 +6,8 @@ from dataclasses import dataclass
 @dataclass
 class NNLayerConfig:
     """Class for storing config and results for a layer."""
-    accuracy: float
+    accuracy_train: float
+    accuracy_test: float
     num_params: int
     c1_ksize: int
     c1_stride: int

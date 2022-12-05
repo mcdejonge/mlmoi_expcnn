@@ -44,10 +44,7 @@ configs = []  # List of NNLayerConfig objects
 kernel_sizes = [1, 2, 3]
 filter_nums = [16, 32, 64]
 strides = [1, 2]
-# TODO it's impossible to run a truly large number of experiments
-# without VSCode crashing. Let's reduce the number of permutations
-# kernel_sizes = [1, 3]
-# filter_nums = [16, 32]
+
 for config in itertools.product(kernel_sizes, # kernel size in convolution 1
                                 strides, # stride size in convolution 1
                                 kernel_sizes, # kernel size in convolution 2
@@ -55,7 +52,8 @@ for config in itertools.product(kernel_sizes, # kernel size in convolution 1
                                 filter_nums, # number of filters to use
                                 ):
     configs.append(NNLayerConfig(
-        accuracy = 0,
+        accuracy_train = 0,
+        accuracy_test = 0,
         num_params = 0,
         c1_ksize = config[0],
         c1_stride = config[1],
@@ -69,11 +67,11 @@ num_epochs = 2 # During development keep very low. 10 is for real tests
 num_epochs = 10
 learning_rate = 1e-3
 
-# We need an example set to calculate some layer parameters
-x, y = next(iter(train_dataloader))
+xtrain, ytrain = next(iter(train_dataloader))
+xtest, ytest = next(iter(train_dataloader))
 
 for config in configs:
-    model = ConfigurableNN(config, x).to(device)
+    model = ConfigurableNN(config, xtrain).to(device)
     # dump_nn_model_steps(model, x)
     # continue;
     model = train_model.trainloop(
@@ -90,8 +88,10 @@ for config in configs:
         eval_steps=len(test_dataloader),
     )
     config.num_params = train_model.count_parameters(model)
-    yhat = model(x)
-    config.accuracy = accuracy(y, yhat).item()
+    yhat_train = model(xtrain)
+    config.accuracy_train = accuracy(ytrain, yhat_train).item()
+    yhat_test = model(xtest)
+    config.accuracy_test = accuracy(ytest, yhat_test).item()
     # break # During development
 
 # Once we're done training, store the config data in a csv file.
