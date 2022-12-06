@@ -99,3 +99,6 @@ data/*
 
 # VSCode devcontainer
 .devcontainer
+
+# VENV
+venv/
